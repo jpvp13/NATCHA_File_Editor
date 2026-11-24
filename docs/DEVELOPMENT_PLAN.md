@@ -1,6 +1,6 @@
 # Development plan
 
-Status: proposed phased plan. No phase authorizes production financial processing without specification approval.
+Status: proposed phased plan. Phase 1 parser/validator foundation is implemented; the UI remains deferred. No phase authorizes production financial processing without specification approval.
 
 ## Phase 0 — Discovery and approval gate
 
@@ -24,6 +24,10 @@ Deliverables:
 - Synthetic fixture policy and repository safeguards.
 
 Exit gate: clean CI on a minimal application skeleton; no financial behavior.
+
+### Current Phase 1 delivery
+
+The repository now includes a Python package scaffold, immutable PPD domain models, fixed-width parser, structural/control validator, deterministic writer, selected-entry review preview, synthetic fixtures, field mapping, and tests. The environment does not currently have `pytest` installed; the test functions were invoked directly and passed. Installing the declared development dependency remains an environment setup task.
 
 ## Phase 2 — Safe inspection workflow
 

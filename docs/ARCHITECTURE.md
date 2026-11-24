@@ -1,6 +1,6 @@
 # Architecture
 
-Status: proposed architecture for review. This document describes boundaries and safeguards; it does not authorize financial processing behavior.
+Status: proposed architecture with Phase 1 parser boundary implemented. This document describes boundaries and safeguards; it does not authorize financial processing behavior.
 
 ## Recommendation
 
@@ -43,6 +43,18 @@ These are recommendations, not locked dependencies:
 - Structured JSON logs with redaction and correlation IDs; metrics and traces through the organization’s approved platform.
 
 Do not add these dependencies until the technology choice and environment are approved. A first milestone can remain documentation-only.
+
+## Phase 1 implementation boundary
+
+The current implementation is intentionally headless and standard-library-only:
+
+- `domain.models` contains immutable source-linked file, batch, entry, addenda, control, and issue models.
+- `parser.ppd` parses 94-character file, batch, entry, addenda, control, and padding records while retaining raw record text and the source SHA-256 digest.
+- `validation.ppd` checks PPD scope, record/header constraints, counts, entry hashes, debit/credit totals, addenda indicators, and 10-record block alignment.
+- `writer` provides deterministic reserialization and a review-only selected-entry preview that recalculates structural controls without changing transaction semantics.
+- `tests/` contains synthetic fixtures and direct pytest-compatible tests; no live or employee data is present.
+
+The selected-entry preview is not a reversal file. It does not translate transaction codes, change dates or descriptions, issue trace numbers, or create bank-ready output.
 
 ## Key design principles
 
